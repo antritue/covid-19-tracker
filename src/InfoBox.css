@@ -1,0 +1,36 @@
+.infoBox{
+    flex: 1
+}
+
+.infoBox:not(:last-child){
+    margin-right: 20px;
+}
+
+.infoBox__cases{
+    /* color: #cc1034; */
+    font-weight: 600;
+    /* font-weight: 1.75rem; */
+    margin-bottom: 0.5rem;
+}
+
+.selected--cases{
+    border-top: 10px solid #CC1034;
+}
+
+.selected--recovered{
+    border-top: 10px solid #7dd71d;
+}
+
+.selected--deaths{
+    border-top: 10px solid #6f3b5d;
+}
+
+.title--cases{
+    color: #CC1034;
+}
+.title--recovered{
+    color: #7dd71d;
+}
+.title--deaths{
+    color: #6f3b5d;
+}
