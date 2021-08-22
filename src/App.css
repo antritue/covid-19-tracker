@@ -47,6 +47,11 @@ body{
   margin-top: 20px;
 }
 
+.footer{
+  text-align: center;
+  color: transparent;
+}
+
 @media (max-width: 990px) {
   .app{
     flex-direction: column;

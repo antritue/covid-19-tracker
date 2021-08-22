@@ -7,6 +7,7 @@ import Map from './Map'
 import Table from './Table'
 import { printStats, sortData } from './util';
 import "leaflet/dist/leaflet.css"
+import axios from 'axios'
 
 function App() {
   const [countries, setCountries] = useState([])
@@ -61,17 +62,15 @@ function App() {
       await fetch(url)
       .then((resoponse) => resoponse.json())
       .then((data) => {
-        // setCountry(countryCode)
         setCountryInfo(data)
         setMapCenter([10, 8])
         setMapZoom(2)
       })
     } else{
-      const url = `https://disease.sh/v3/covid-19/countries/${countryCode}`
+      const url = `https://disease.sh/v3/covid-19/countries/${countryCode}?yesterday=true`
       await fetch(url)
       .then((resoponse) => resoponse.json())
       .then((data) => {
-        // setCountry(countryCode)
         setCountryInfo(data)
         setMapCenter([data.countryInfo.lat, data.countryInfo.long])
         setMapZoom(4)
@@ -81,65 +80,70 @@ function App() {
 
 
   return (
-    <div className="app">
-      <div className="app__left">
-        <div className="app__header">
-          <h1>COVID-19 tracker</h1>
-          <FormControl className='app__dropdown'>
-            <Select 
-              variant='outlined' 
-              value={country}
-              onChange={onCountryChange}
-            >
-              <MenuItem value='worldwide'>Worldwide</MenuItem>
-              {
-                countries.map(country => (
-                  <MenuItem value={country.value}>{country.name}</MenuItem>
-                ))
-              }
-            </Select>
-          </FormControl>
-        </div>
+    <>
+      <div className="app">
+        <div className="app__left">
+          <div className="app__header">
+            <h1>COVID-19 tracker</h1>
+            <FormControl className='app__dropdown'>
+              <Select 
+                variant='outlined' 
+                value={country}
+                onChange={onCountryChange}
+              >
+                <MenuItem value='worldwide'>Worldwide</MenuItem>
+                {
+                  countries.map(country => (
+                    <MenuItem value={country.value}>{country.name}</MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
+          </div>
 
-        <div className="app__stats">
-          <InfoBox 
-            active = {casesType === 'cases'}
-            casesType = {casesType}
-            onClick = {e => setCasesType('cases')}
-            title='Corona virus case'
-            cases={printStats(countryInfo.todayCases)}
-            total={printStats(countryInfo.cases)} 
-          />
-          <InfoBox 
-            active = {casesType === 'recovered'}
-            casesType = {casesType}
-            onClick = {e => setCasesType('recovered')}
-            title='Recovered' 
-            cases={printStats(countryInfo.todayRecovered)} 
-            total={printStats(countryInfo.recovered)} />
-          <InfoBox 
-            active = {casesType === 'deaths'}
-            casesType = {casesType}
-            onClick = {e => setCasesType('deaths')}
-            title='Deaths' 
-            cases={printStats(countryInfo.todayDeaths)} 
-            total={printStats(countryInfo.deaths)} 
-          />
-        </div>
+          <div className="app__stats">
+            <InfoBox 
+              active = {casesType === 'cases'}
+              casesType = {casesType}
+              onClick = {() => setCasesType('cases')}
+              title='Corona virus case'
+              cases={printStats(countryInfo.todayCases)}
+              total={printStats(countryInfo.cases)} 
+            />
+            <InfoBox 
+              active = {casesType === 'recovered'}
+              casesType = {casesType}
+              onClick = {() => setCasesType('recovered')}
+              title='Recovered' 
+              cases={printStats(countryInfo.todayRecovered)} 
+              total={printStats(countryInfo.recovered)} />
+            <InfoBox 
+              active = {casesType === 'deaths'}
+              casesType = {casesType}
+              onClick = {() => setCasesType('deaths')}
+              title='Deaths' 
+              cases={printStats(countryInfo.todayDeaths)} 
+              total={printStats(countryInfo.deaths)} 
+            />
+          </div>
 
-        <Map casesType={casesType} center={mapCenter} zoom={mapZoom} countries={mapCountries}/>
+          <Map casesType={casesType} center={mapCenter} zoom={mapZoom} countries={mapCountries}/>
+        </div>
+        
+        <Card className="app__right">
+          <CardContent>
+            <h3>Live Cases by Country</h3>
+            <Table countries={tableData}/>
+            <h3>Worlwide new {casesType}</h3>
+            <LineGraph casesType={casesType}/>
+          </CardContent>
+        </Card>
+        
       </div>
-      
-      <Card className="app__right">
-        <CardContent>
-          <h3>Live Cases by Country</h3>
-          <Table countries={tableData}/>
-          <h3>Worlwide new {casesType}</h3>
-          <LineGraph casesType={casesType}/>
-        </CardContent>
-      </Card>
-      
-    </div>
+      <div className="footer">
+        <p>Made by Tue An - 2021</p>
+      </div>
+    </>
   );
 }
 

@@ -2,52 +2,6 @@ import numeral from 'numeral'
 import React, { useEffect, useState } from 'react'
 import {Line} from 'react-chartjs-2'
 
-const options = {
-    legend: {
-        // plugins:{
-            display: false
-        // }
-    },
-    elements:{
-        point: {
-            radius: 0
-        }
-    },
-    // maintainAspectRatio: false,
-    tooltips: {
-        mode: 'index',
-        intersect: false,
-        callbacks: {
-            label: function(tooltipItem, data){
-                return numeral(tooltipItem.value).format("+0.0")
-            }
-        }
-    },
-    scales:{
-        xAxes: [
-            {
-                type: 'time',
-                time: {
-                    format: "MM/DD/YY",
-                    tooltipFormat: 'll'
-                }
-            }
-        ],
-        yAxes: [
-            {
-                gridLines: {
-                    display: false
-                },
-                ticks:{
-                    callback: function(value, index, values){
-                        return numeral(value).format('0a')
-                    }
-                }
-            }
-        ]
-    }
-}
-
 const casesTypeColors = {
     cases:{
         hex: '#CC1034',
