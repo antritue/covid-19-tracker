@@ -141,7 +141,6 @@ function App() {
       </div>
       <div className="footer">
         <p>Made by Tue An - 2021</p>
-        <p>Made by Tue An - 2021</p>
       </div>
     </>
   );
