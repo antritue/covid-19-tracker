@@ -30,7 +30,7 @@ body{
 }
 
 .app__left{
-  flex: 0.6
+  flex: 0.6;
 }
 
 .app__right{
@@ -55,5 +55,9 @@ body{
 @media (max-width: 990px) {
   .app{
     flex-direction: column;
+  }
+
+  .app__right .MuiCardContent-root{
+    width: 100%;
   }
 }
