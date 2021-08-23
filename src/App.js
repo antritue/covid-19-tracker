@@ -7,7 +7,6 @@ import Map from './Map'
 import Table from './Table'
 import { printStats, sortData } from './util';
 import "leaflet/dist/leaflet.css"
-import axios from 'axios'
 
 function App() {
   const [countries, setCountries] = useState([])
